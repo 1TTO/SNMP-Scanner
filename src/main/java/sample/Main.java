@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.soulwing.snmp.*;
 
-import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
 
 //http://www.net-snmp.org/docs/mibs/
 //https://github.com/soulwing/tnm4j
@@ -15,11 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
         BorderPane root = new BorderPane();
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+
+        String[] tags = {"sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "ipAdEntAddr", "hrStorageSize"};
+        String[] ipAddresses = {"10.10.30.254", "10.10.30.208"};
+        ExecutorService ex;
 
         Mib mib = MibFactory.getInstance().newMib();
         mib.load("SNMPv2-MIB");
@@ -27,24 +30,15 @@ public class Main extends Application {
         mib.load("IP-MIB");
         mib.load("HOST-RESOURCES-MIB");
 
-        SimpleSnmpV2cTarget target = new SimpleSnmpV2cTarget();
-        target.setAddress("10.10.30.254");
-        target.setCommunity("public");
+        for (int i = 0; i < ipAddresses.length; i++){
+            System.out.println("-------------------------------------------------");
+            SNMPrecord sr = new SNMPrecord(ipAddresses[i], "public", mib);
+            VarbindCollection vr = sr.getVarbindsByTagName(tags);
+            sr.close();
 
-        SnmpContext context = SnmpFactory.getInstance().newContext(target, mib);
-        String columns[] = {"sysDescr", "sysUpTime", "sysContact", "sysName",
-                "sysLocation", "ipAdEntAddr", "hrStorageSize"};
-
-        try {
-            VarbindCollection varbinds = context.getNext(columns).get();
-
-            for (Varbind varbind : varbinds) {
-                System.out.println(varbind.toString() + " : " + varbind.getOid());
+            for (Varbind v : vr){
+                System.out.println(v.toString());
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            context.close();
         }
     }
 
