@@ -22,7 +22,8 @@ public class Main extends Application {
 
         String[] tags = {"sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "ipAdEntAddr", "hrStorageSize"};
         String[] ipAddresses = {"10.10.30.254", "10.10.30.208"};
-        ExecutorService ex;
+        Network network = new Network("192.168.1.2", 24);
+        ExecutorService es;
 
         Mib mib = MibFactory.getInstance().newMib();
         mib.load("SNMPv2-MIB");
