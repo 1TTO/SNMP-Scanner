@@ -2,13 +2,13 @@ package sample;
 
 import org.soulwing.snmp.*;
 
-public class SNMPrecord {
-    Mib mib;
+public class SNMPrecord{
     SimpleSnmpV2cTarget target;
     SnmpContext context;
+    SNMPscanner scanner;
 
-    SNMPrecord(String ipAddress, String community, Mib mib){
-        this.mib = mib;
+    SNMPrecord(String ipAddress, String community, Mib mib, SNMPscanner scanner){
+        this.scanner = scanner;
 
         target = new SimpleSnmpV2cTarget();
         target.setAddress(ipAddress);
@@ -17,11 +17,12 @@ public class SNMPrecord {
         context = SnmpFactory.getInstance().newContext(target, mib);
     }
 
-    VarbindCollection getVarbindsByTagName(String[] tagNames){
-        return context.getNext(tagNames).get();
-    }
-
-    void close(){
-        context.close();
+    public void run(String[] tags) {
+        try {
+            context.asyncGetNext(scanner, tags);
+        }catch (IllegalArgumentException ex){
+            return;
+        }
+        //context.asyncGet(scanner, tags);
     }
 }
