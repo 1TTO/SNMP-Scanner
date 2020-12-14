@@ -8,28 +8,24 @@ import java.util.ArrayList;
 public class SNMPscanner implements SnmpCallback<VarbindCollection> {
     private final ArrayList<VarbindCollection> varbindCollections;
     private final Mib mib;
+    private String scanMethod = "get";
 
-    SNMPscanner() throws IOException {
+    SNMPscanner(String[] mibTags) throws IOException {
         varbindCollections = new ArrayList<>();
-
         mib = MibFactory.getInstance().newMib();
-        mib.load("SNMPv2-MIB");
-        mib.load("IF-MIB");
-        mib.load("IP-MIB");
-        mib.load("HOST-RESOURCES-MIB");
+
+        for (String mibTag : mibTags) {
+            mib.load(mibTag);
+        }
     }
 
     void scanNetwork(Network network, String community, String[] tags){
         this.varbindCollections.clear();
         ArrayList<String> addresses = network.getNetworkHosts();
 
-        for (int i = 0; i < addresses.size(); i++){
-            new SNMPrecord(addresses.get(i), community, mib, this).run(tags);
+        for (String address : addresses) {
+            new SNMPrecord(address, community, mib, this).run(tags);
         }
-    }
-
-    ArrayList<VarbindCollection> getVarbindCollections(){
-        return varbindCollections;
     }
 
     void scanAddress(String address, String community, String[] tags){
@@ -49,5 +45,13 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
 
         //updatedisplay
         event.getContext().close();
+    }
+
+    void setScanMethod(String scanMethod){this.scanMethod = scanMethod;}
+
+    String getScanMethod(){return this.scanMethod; }
+
+    ArrayList<VarbindCollection> getVarbindCollections(){
+        return varbindCollections;
     }
 }

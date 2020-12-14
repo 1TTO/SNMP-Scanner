@@ -18,9 +18,10 @@ public class Main extends Application {
         primaryStage.show();
 
         String[] tags = {"sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "ipAdEntAddr", "hrStorageSize"};
+        String[] mibtags = {"SNMPv2-MIB", "IF-MIB", "IP-MIB", "HOST-RESOURCES-MIB"};
 
         try{
-            SNMPscanner scanner = new SNMPscanner();
+            SNMPscanner scanner = new SNMPscanner(mibtags);
             //scanner.scanNetwork(new Network("10.10.30.208", 24), "public", tags);
             scanner.scanNetwork(new Network("10.10.29.208", "10.10.30.201"), "public", tags);
             //scanner.scanAddress("10.10.30.208", "public", tags);

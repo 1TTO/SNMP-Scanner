@@ -19,10 +19,11 @@ public class SNMPrecord{
 
     public void run(String[] tags) {
         try {
-            context.asyncGetNext(scanner, tags);
-        }catch (IllegalArgumentException ex){
-            return;
-        }
-        //context.asyncGet(scanner, tags);
+            if (scanner.getScanMethod().equals("get")){
+                context.asyncGet(scanner, tags);
+            }else if (scanner.getScanMethod().equals("getNext")) {
+                context.asyncGetNext(scanner, tags);
+            }
+        }catch (IllegalArgumentException ignored){}
     }
 }
