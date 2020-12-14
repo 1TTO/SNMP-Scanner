@@ -14,6 +14,10 @@ public class Network {
         setNetworkHosts(this.networkID, this.subnetmask, 0);
     }
 
+    Network(String firstAddress, String lastAddress){
+        setNetworkHosts(getFullAddress(firstAddress), getFullAddress(lastAddress), 0);
+    }
+
     private void setNetworkID(String singleNetworkAddress, int subnetmask){
         String[] networkParts = singleNetworkAddress.split("\\.");
 
@@ -31,6 +35,42 @@ public class Network {
 
             if (i < 8) networkID = networkID.concat(String.format("%03d",delta));
             else networkID = networkID.concat(".".concat(String.format("%03d",delta)));
+        }
+    }
+
+    private String getFullAddress(String address){
+        String[] addressParts = address.split("\\.");
+        String ret = "";
+
+        for (int i = 0; i < addressParts.length; i++){
+            if (i == 0) ret = String.format("%03d", Integer.parseInt(addressParts[i]));
+            else ret = ret.concat(".").concat(String.format("%03d", Integer.parseInt(addressParts[i])));
+        }
+        return ret;
+    }
+
+    private void setNetworkHosts(String firstAddress, String lastAddress, int recI){
+        String[] firstAddressParts = firstAddress.split("\\.");
+        String[] lastAddressParts = lastAddress.split("\\.");
+
+        if (recI == firstAddressParts.length - 1) {
+            int limit;
+
+            if (firstAddress.substring(0, 11).equals(lastAddress.substring(0, 11))) limit = Integer.parseInt(lastAddressParts[3]);
+            else limit = 255;
+
+            for (int i = Integer.parseInt(firstAddressParts[3]); i <= limit; i++){
+                this.getNetworkHosts().add(String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], String.format("%03d", i)));
+            }
+        }else{
+            for (int j = Integer.parseInt(firstAddressParts[recI]); j <= Integer.parseInt(lastAddressParts[recI]); j++){
+                firstAddressParts[recI] = String.format("%03d", j);
+
+                setNetworkHosts( String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], firstAddressParts[3]), lastAddress, recI + 1);
+                for (int i = recI + 1; i < firstAddressParts.length; i++){
+                    firstAddressParts[i] = "000";
+                }
+            }
         }
     }
 

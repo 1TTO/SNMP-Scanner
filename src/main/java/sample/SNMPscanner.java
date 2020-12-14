@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class SNMPscanner implements SnmpCallback<VarbindCollection> {
     private final ArrayList<VarbindCollection> varbindCollections;
-    private Mib mib;
+    private final Mib mib;
 
     SNMPscanner() throws IOException {
         varbindCollections = new ArrayList<>();

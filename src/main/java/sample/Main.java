@@ -21,7 +21,8 @@ public class Main extends Application {
 
         try{
             SNMPscanner scanner = new SNMPscanner();
-            scanner.scanNetwork(new Network("10.10.30.208", 24), "public", tags);
+            //scanner.scanNetwork(new Network("10.10.30.208", 24), "public", tags);
+            scanner.scanNetwork(new Network("10.10.29.208", "10.10.30.201"), "public", tags);
             //scanner.scanAddress("10.10.30.208", "public", tags);
 
             Thread.sleep(30000);
