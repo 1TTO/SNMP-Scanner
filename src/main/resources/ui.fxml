@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="615.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-  <tabs>
-    <Tab text="Scanner" />
-    <Tab text="Results" />
-    <Tab text="Settings" />
-  </tabs>
-</TabPane>
+<VBox xmlns="http://javafx.com/javafx/11.0.1">
+    <Text text="SNMP Scanner" textAlignment="CENTER" wrappingWidth="373.9902048110962">
+      <font>
+         <Font name="Berlin Sans FB" size="24.0" />
+      </font></Text>
+    <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="373.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <Tab text="Scanner">
+            <Pane prefHeight="380.0" prefWidth="362.0">
+                <TextField layoutX="14.0" layoutY="18.0" prefHeight="25.0" prefWidth="267.0" promptText="10.10.30.0">
+                </TextField>
+                <Button layoutX="290.0" layoutY="18.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Scan" />
+                <TextField layoutX="14.0" layoutY="53.0" prefHeight="25.0" prefWidth="268.0" promptText="10.10.30.0" />
+            <ChoiceBox layoutX="290.0" layoutY="53.0" prefHeight="25.0" prefWidth="70.0" />
+            </Pane>
+        </Tab>
+
+        <Tab text="Results">
+            <Pane>
+                <ScrollPane prefHeight="381.0" prefWidth="374.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
+                </ScrollPane>
+            </Pane>
+        </Tab>
+        <Tab text="Settings">
+        </Tab>
+    </TabPane>
+</VBox>
