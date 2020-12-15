@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SNMP" target="8" />
+      <module name="SNMP" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package sample;
+package manuel;
 
 import org.soulwing.snmp.*;
 
