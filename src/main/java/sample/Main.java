@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 //http://www.net-snmp.org/docs/mibs/
