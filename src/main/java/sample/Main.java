@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 //http://www.net-snmp.org/docs/mibs/
 //https://github.com/soulwing/tnm4j
 
@@ -17,14 +20,11 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-        String[] tags = {"sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "ipAdEntAddr", "hrStorageSize"};
-        String[] mibtags = {"SNMPv2-MIB", "IF-MIB", "IP-MIB", "HOST-RESOURCES-MIB"};
-
         try{
-            SNMPscanner scanner = new SNMPscanner(mibtags);
-            //scanner.scanNetwork(new Network("10.10.30.208", 24), "public", tags);
-            scanner.scanNetwork(new Network("10.10.29.208", "10.10.30.201"), "public", tags);
-            //scanner.scanAddress("10.10.30.208", "public", tags);
+            SNMPscanner scanner = new SNMPscanner(Objects.requireNonNull(File.getCSVContent(File.MIB_FILE_PATH)));
+            //scanner.scanNetwork(new Network("10.10.30.208", 24), "public", Objects.requireNonNull(File.getCSVContent(File.OID_FILE_PATH)));
+            scanner.scanNetwork(new Network("10.10.29.208", "10.10.30.201"), "public", Objects.requireNonNull(File.getCSVContent(File.OID_FILE_PATH)));
+            //scanner.scanAddress("10.10.30.208", "public", Objects.requireNonNull(File.getCSVContent(File.OID_FILE_PATH)));
 
             Thread.sleep(30000);
             for (int i = 0; i < scanner.getVarbindCollections().size(); i++){

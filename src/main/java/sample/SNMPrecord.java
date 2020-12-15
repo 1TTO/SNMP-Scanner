@@ -2,6 +2,8 @@ package sample;
 
 import org.soulwing.snmp.*;
 
+import java.util.List;
+
 public class SNMPrecord{
     SimpleSnmpV2cTarget target;
     SnmpContext context;
@@ -17,13 +19,13 @@ public class SNMPrecord{
         context = SnmpFactory.getInstance().newContext(target, mib);
     }
 
-    public void run(String[] tags) {
+    public void run(List<String> tags) {
         try {
             if (scanner.getScanMethod().equals("get")){
                 context.asyncGet(scanner, tags);
             }else if (scanner.getScanMethod().equals("getNext")) {
                 context.asyncGetNext(scanner, tags);
             }
-        }catch (IllegalArgumentException ignored){}
+        }catch (Exception ignored){}
     }
 }

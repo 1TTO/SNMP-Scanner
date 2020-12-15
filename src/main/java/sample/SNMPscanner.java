@@ -4,13 +4,14 @@ import org.soulwing.snmp.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SNMPscanner implements SnmpCallback<VarbindCollection> {
     private final ArrayList<VarbindCollection> varbindCollections;
     private final Mib mib;
-    private String scanMethod = "get";
+    private String scanMethod = "getNext";
 
-    SNMPscanner(String[] mibTags) throws IOException {
+    SNMPscanner(List<String> mibTags) throws IOException {
         varbindCollections = new ArrayList<>();
         mib = MibFactory.getInstance().newMib();
 
@@ -19,7 +20,7 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
         }
     }
 
-    void scanNetwork(Network network, String community, String[] tags){
+    void scanNetwork(Network network, String community, List<String> tags){
         this.varbindCollections.clear();
         ArrayList<String> addresses = network.getNetworkHosts();
 
@@ -28,7 +29,7 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
         }
     }
 
-    void scanAddress(String address, String community, String[] tags){
+    void scanAddress(String address, String community, List<String> tags){
         this.varbindCollections.clear();
         new SNMPrecord(address, community, mib, this).run(tags);
     }
