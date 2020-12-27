@@ -15,7 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/ui.fxml"));
         primaryStage.setTitle("SNMP Scanner");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 370, 440));
         primaryStage.show();
 
         try{
@@ -24,7 +24,7 @@ public class Main extends Application {
             scanner.scanNetwork(new Network("10.10.29.208", "10.10.30.201"), "public", File.getCSVContent(File.OID_FILE_PATH));
             //scanner.scanAddress("10.10.30.208", "public", File.getCSVContent(File.OID_FILE_PATH));
 
-            Thread.sleep(30000);
+            //Thread.sleep(30000);
             for (int i = 0; i < scanner.getVarbindCollections().size(); i++){
                 System.out.println(scanner.getVarbindCollections().get(i).get(5).toString());
             }
