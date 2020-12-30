@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manuel.Controller">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manuel.Controller">
     <Text text="SNMP Scanner" textAlignment="CENTER" wrappingWidth="373.9902048110962">
       <font>
          <Font name="Berlin Sans FB" size="24.0" />
@@ -22,16 +22,15 @@
 
         <Tab text="Results">
             <Pane>
-                <ScrollPane prefHeight="381.0" prefWidth="374.0">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="362.0" />
+                <ScrollPane layoutX="17.0" prefHeight="381.0" prefWidth="344.0">
+                    <VBox fx:id="resultsContent" alignment="CENTER"/>
                 </ScrollPane>
             </Pane>
         </Tab>
-
         <Tab text="Traps">
             <Pane>
                 <ScrollPane prefHeight="381.0" prefWidth="374.0">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="378.0" prefWidth="362.0" />
+                    <VBox fx:id="trapsContent" />
                 </ScrollPane>
             </Pane>
         </Tab>
@@ -48,7 +47,7 @@
                      <Font size="17.0" />
                   </font>
                </Label>
-               <Label layoutX="187.0" layoutY="14.0" text="ScanMethod" underline="true">
+               <Label layoutX="187.0" layoutY="14.0" text="Community" underline="true">
                   <font>
                      <Font size="17.0" />
                   </font>
@@ -80,19 +79,19 @@
                <TextField fx:id="oidTextfield" layoutX="201.0" layoutY="236.0" prefHeight="25.0" prefWidth="108.0" />
                <ScrollPane layoutX="21.0" layoutY="266.0" prefHeight="97.0" prefWidth="169.0">
                  <content>
-                   <VBox fx:id="mibContent"/>
+                   <VBox fx:id="mibContent" />
                  </content>
                </ScrollPane>
                <ScrollPane layoutX="201.0" layoutY="265.0" prefHeight="98.0" prefWidth="159.0">
                  <content>
-                     <VBox fx:id="oidContent"/>
+                     <VBox fx:id="oidContent" />
                  </content>
                </ScrollPane>
                 <RadioButton layoutX="187.0" layoutY="42.0" mnemonicParsing="false" selected="true" text="public">
                   <toggleGroup>
-                     <ToggleGroup fx:id="scanMethod" />
+                     <ToggleGroup fx:id="community" />
                   </toggleGroup></RadioButton>
-                <RadioButton layoutX="187.0" layoutY="65.0" mnemonicParsing="false" text="private" toggleGroup="$scanMethod" />
+                <RadioButton layoutX="187.0" layoutY="65.0" mnemonicParsing="false" text="private" toggleGroup="$community" />
             </children>
             </Pane>
         </Tab>

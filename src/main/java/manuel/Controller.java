@@ -8,18 +8,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
+    static VBox staticResultsContent;
     public Button scanButton;
     public TextField networkMaskTextField, firstAddress, secondAddress, oidTextfield, mibTextfield;
-    public ToggleGroup scanMethod, scanOption, getMethod;
-    public VBox mibContent, oidContent;
+    public ToggleGroup community, scanOption, getMethod;
+    public VBox mibContent, oidContent, resultsContent, trapsContent;
     public Button oidAddButton, mibAddButton;
 
     public void initialize(){
+        staticResultsContent = resultsContent;
         updateMibScrollPane();
         updateOidScrollPane();
 
         scanButton.setOnAction(e->{
-            String scanMethodText = ((RadioButton)scanMethod.getSelectedToggle()).getText();
+            String communityText = ((RadioButton)community.getSelectedToggle()).getText();
             String scanOptionText = ((RadioButton)scanOption.getSelectedToggle()).getText();
             String getMethodText = ((RadioButton)getMethod.getSelectedToggle()).getText();
             ArrayList<String> mibFileContent = null, oidFileContent = null;
@@ -27,6 +29,8 @@ public class Controller {
             try {
                 mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
                 Main.scanner = new SNMPscanner(mibFileContent);
+                Main.scanner.getVarbindCollections().clear();
+                resultsContent.getChildren().clear();
             } catch (IOException ioException) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("MIB");
@@ -47,18 +51,18 @@ public class Controller {
                 alert.showAndWait();
             }
 
-            if (mibFileContent != null && oidFileContent != null && Address.isAddress(firstAddress.getText()) && Address.isAddress(secondAddress.getText())){
+            if (mibFileContent != null && oidFileContent != null && Address.isAddress(firstAddress.getText())){
                 Main.scanner.setScanMethod(getMethodText);
 
                 switch (scanOptionText) {
                     case "Address":
-                        Main.scanner.scanAddress(firstAddress.getText(), scanMethodText, oidFileContent);
+                        Main.scanner.scanAddress(firstAddress.getText(), communityText, oidFileContent);
                         break;
                     case "Network":
-                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), Integer.parseInt(networkMaskTextField.getText())), scanMethodText, oidFileContent);
+                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), Integer.parseInt(networkMaskTextField.getText())), communityText, oidFileContent);
                         break;
                     case "Range":
-                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), secondAddress.getText()), scanMethodText, oidFileContent);
+                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), secondAddress.getText()), communityText, oidFileContent);
                         break;
                 }
             }
@@ -170,7 +174,7 @@ public class Controller {
     }
 
     void updateOidScrollPane(){
-        oidContent.getChildren().removeAll();
+        oidContent.getChildren().clear();
 
         try {
             ArrayList<String> oidFileContent  = File.getCSVContent(File.OID_FILE_PATH);
@@ -200,7 +204,7 @@ public class Controller {
     }
 
     void updateMibScrollPane(){
-        mibContent.getChildren().removeAll();
+        mibContent.getChildren().clear();
 
         try {
             ArrayList<String> mibFileContent  = File.getCSVContent(File.MIB_FILE_PATH);

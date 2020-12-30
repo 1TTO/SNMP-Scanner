@@ -2,7 +2,7 @@ package manuel;
 
 import org.soulwing.snmp.*;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class SNMPrecord{
     SimpleSnmpV2cTarget target;
@@ -19,7 +19,7 @@ public class SNMPrecord{
         context = SnmpFactory.getInstance().newContext(target, mib);
     }
 
-    public void run(List<String> tags) {
+    public void run(ArrayList<String> tags) {
         try {
             if (scanner.getScanMethod().equals("get")){
                 context.asyncGet(scanner, tags);

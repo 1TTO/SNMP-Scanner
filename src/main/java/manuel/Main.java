@@ -19,6 +19,8 @@ public class Main extends Application {
         primaryStage.setTitle("SNMP Scanner");
         primaryStage.setScene(new Scene(root, 370, 440));
         primaryStage.show();
+
+
     }
 
 
