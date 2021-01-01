@@ -12,26 +12,24 @@
     <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="373.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
         <Tab text="Scanner">
             <Pane prefHeight="380.0" prefWidth="362.0">
-                <TextField fx:id="firstAddress" layoutX="15.0" layoutY="62.0" prefHeight="25.0" prefWidth="309.0" promptText="10.10.30.0">
+                <TextField fx:id="firstAddress" layoutX="15.0" layoutY="62.0" prefHeight="25.0" prefWidth="301.0" promptText="10.10.30.0">
                 </TextField>
-                <Button fx:id="scanButton" layoutX="10.0" layoutY="319.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="353.0" text="Scan" />
-                <TextField fx:id="secondAddress" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="309.0" promptText="10.10.30.0" visible="false" />
-            <TextField fx:id="networkMaskTextField" layoutX="323.0" layoutY="62.0" prefHeight="25.0" prefWidth="40.0" promptText="24" text="24" />
+                <Button fx:id="scanButton" layoutX="10.0" layoutY="319.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="348.0" text="Scan" />
+                <TextField fx:id="secondAddress" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="300.0" promptText="10.10.30.0" visible="false" />
+            <TextField fx:id="networkMaskTextField" layoutX="316.0" layoutY="62.0" prefHeight="25.0" prefWidth="40.0" promptText="24" text="24" />
             </Pane>
         </Tab>
 
         <Tab text="Results">
             <Pane>
-                <ScrollPane layoutX="17.0" prefHeight="381.0" prefWidth="344.0">
-                    <VBox fx:id="resultsContent" alignment="CENTER"/>
-                </ScrollPane>
+                <ListView fx:id="resultListView" layoutX="17.0" layoutY="10.0" prefHeight="349.0" prefWidth="339.0">
+                </ListView>
             </Pane>
         </Tab>
         <Tab text="Traps">
             <Pane>
-                <ScrollPane prefHeight="381.0" prefWidth="374.0">
-                    <VBox fx:id="trapsContent" />
-                </ScrollPane>
+                <ListView fx:id="trapsListView" layoutX="17.0" layoutY="10.0" prefHeight="349.0" prefWidth="339.0">
+                </ListView>
             </Pane>
         </Tab>
         <Tab text="Settings">

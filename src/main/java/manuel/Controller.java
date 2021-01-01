@@ -8,15 +8,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
-    static VBox staticResultsContent;
+    static ListView<SNMPrecordItem> staticResultListView;
+    public ListView<SNMPrecordItem> resultListView;
+    static ListView<SNMPtrapsListenerItem> staticTrapsListView;
+    public ListView<SNMPtrapsListenerItem> trapsListView;
     public Button scanButton;
     public TextField networkMaskTextField, firstAddress, secondAddress, oidTextfield, mibTextfield;
     public ToggleGroup community, scanOption, getMethod;
-    public VBox mibContent, oidContent, resultsContent, trapsContent;
+    public VBox mibContent, oidContent;
     public Button oidAddButton, mibAddButton;
 
     public void initialize(){
-        staticResultsContent = resultsContent;
+        staticResultListView = resultListView;
+        staticTrapsListView = trapsListView;
+
         updateMibScrollPane();
         updateOidScrollPane();
 
@@ -28,9 +33,9 @@ public class Controller {
 
             try {
                 mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
-                Main.scanner = new SNMPscanner(mibFileContent);
+                Main.scanner = new SNMPscanner(Main.getMib());
                 Main.scanner.getVarbindCollections().clear();
-                resultsContent.getChildren().clear();
+                Main.scanner.getSNMPrecordItems().clear();
             } catch (IOException ioException) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("MIB");

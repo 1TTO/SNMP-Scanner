@@ -1,6 +1,8 @@
 package manuel;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.soulwing.snmp.*;
 
 import java.io.IOException;
@@ -8,16 +10,15 @@ import java.util.ArrayList;
 
 public class SNMPscanner implements SnmpCallback<VarbindCollection> {
     private final ArrayList<VarbindCollection> varbindCollections;
+    private final ObservableList<SNMPrecordItem> snmpRecordItems;
     private final Mib mib;
     private String scanMethod = "getNext";
 
-    SNMPscanner(ArrayList<String> mibTags) throws IOException {
+    SNMPscanner(Mib mib) throws IOException {
+        snmpRecordItems = FXCollections.observableArrayList();
         varbindCollections = new ArrayList<>();
-        mib = MibFactory.getInstance().newMib();
-
-        for (String mibTag : mibTags) {
-            mib.load(mibTag);
-        }
+        this.mib = mib;
+        Controller.staticResultListView.setItems(snmpRecordItems);
     }
 
     void scanNetwork(Network network, String community, ArrayList<String> tags){
@@ -40,9 +41,8 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
             try{
                 varbindCollections.add(event.getResponse().get());
                 Platform.runLater(()->{
-                    Controller.staticResultsContent.getChildren().add(new SNMPrecordItem(event.getResponse().get()));
+                    snmpRecordItems.add(new SNMPrecordItem(event.getResponse().get()));
                 });
-
             }catch (org.soulwing.snmp.TimeoutException e){
                 return;
             }
@@ -57,5 +57,9 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
 
     ArrayList<VarbindCollection> getVarbindCollections(){
         return varbindCollections;
+    }
+
+    ObservableList<SNMPrecordItem> getSNMPrecordItems(){
+        return snmpRecordItems;
     }
 }
