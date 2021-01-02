@@ -56,20 +56,24 @@ public class Controller {
                 alert.showAndWait();
             }
 
-            if (mibFileContent != null && oidFileContent != null && Address.isAddress(firstAddress.getText())){
+            if (mibFileContent != null && oidFileContent != null && Address.isAddress(firstAddress.getText()) && (!scanOptionText.equals("Range") || Address.isAddress(secondAddress.getText()))){
                 Main.scanner.setScanMethod(getMethodText);
+                ArrayList<String> finalOidFileContent = oidFileContent;
 
-                switch (scanOptionText) {
-                    case "Address":
-                        Main.scanner.scanAddress(firstAddress.getText(), communityText, oidFileContent);
-                        break;
-                    case "Network":
-                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), Integer.parseInt(networkMaskTextField.getText())), communityText, oidFileContent);
-                        break;
-                    case "Range":
-                        Main.scanner.scanNetwork(new Network(firstAddress.getText(), secondAddress.getText()), communityText, oidFileContent);
-                        break;
-                }
+                new Thread(()->{
+                    switch (scanOptionText) {
+                        case "Address":
+                            Main.scanner.scanAddress(firstAddress.getText(), communityText, finalOidFileContent);
+                            break;
+                        case "Network":
+                            new Address(firstAddress.getText());
+                            Main.scanner.scanNetwork(new Network(new Address(firstAddress.getText()), Integer.parseInt(networkMaskTextField.getText())), communityText, finalOidFileContent);
+                            break;
+                        case "Range":
+                            Main.scanner.scanNetwork(new Network(new Address(firstAddress.getText()), new Address(secondAddress.getText())), communityText, finalOidFileContent);
+                            break;
+                    }
+                }).start();
             }
         });
 

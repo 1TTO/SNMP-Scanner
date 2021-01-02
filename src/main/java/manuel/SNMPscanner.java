@@ -23,10 +23,10 @@ public class SNMPscanner implements SnmpCallback<VarbindCollection> {
 
     void scanNetwork(Network network, String community, ArrayList<String> tags){
         this.varbindCollections.clear();
-        ArrayList<String> addresses = network.getNetworkHosts();
+        ArrayList<Address> addresses = network.getNetworkHosts();
 
-        for (String address : addresses) {
-            new SNMPrecord(address, community, mib, this).run(tags);
+        for (Address address : addresses) {
+            new SNMPrecord(address.getFullAddress(), community, mib, this).run(tags);
         }
     }
 

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 //http://www.net-snmp.org/docs/mibs/
 //https://github.com/soulwing/tnm4j
 //https://sourceforge.net/projects/net-snmp/files/net-snmp%20binaries/5.5-binaries/
+//https://knowledge.broadcom.com/external/article/57331/how-to-manually-generate-traps-via-windo.html
 
 public class Main extends Application {
     public static SNMPscanner scanner;

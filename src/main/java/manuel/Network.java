@@ -5,21 +5,21 @@ import java.util.ArrayList;
 public class Network {
     private String networkID = "";
     private int netmask;
-    private ArrayList<String> networkHosts = new ArrayList<>();
+    private final ArrayList<Address> networkHosts = new ArrayList<>();
 
-    Network(String singleNetworkAddress, int netmask){
+    Network(Address singleNetworkAddress, int netmask){
         this.netmask = netmask;
 
         setNetworkID(singleNetworkAddress, netmask);
         setNetworkHosts(this.networkID, this.netmask, 0);
     }
 
-    Network(String firstAddress, String lastAddress){
-        setNetworkHosts(getFullAddress(firstAddress), getFullAddress(lastAddress), 0);
+    Network(Address firstAddress, Address lastAddress){
+        setNetworkHosts(firstAddress, lastAddress, 0);
     }
 
-    private void setNetworkID(String singleNetworkAddress, int netmask){
-        String[] networkParts = singleNetworkAddress.split("\\.");
+    private void setNetworkID(Address singleNetworkAddress, int netmask){
+        String[] networkParts = singleNetworkAddress.getFullAddress().split("\\.");
 
         for (int i = 0; i < networkParts.length; i++){
             networkParts[i] = String.format("%03d", Integer.valueOf(networkParts[i]));
@@ -38,35 +38,27 @@ public class Network {
         }
     }
 
-    private String getFullAddress(String address){
-        String[] addressParts = address.split("\\.");
-        String ret = "";
-
-        for (int i = 0; i < addressParts.length; i++){
-            if (i == 0) ret = String.format("%03d", Integer.parseInt(addressParts[i]));
-            else ret = ret.concat(".").concat(String.format("%03d", Integer.parseInt(addressParts[i])));
-        }
-        return ret;
-    }
-
-    private void setNetworkHosts(String firstAddress, String lastAddress, int recI){
-        String[] firstAddressParts = firstAddress.split("\\.");
-        String[] lastAddressParts = lastAddress.split("\\.");
+    private void setNetworkHosts(Address firstAddress, Address lastAddress, int recI){
+        String[] firstAddressParts = firstAddress.getFullAddress().split("\\.");
+        String[] lastAddressParts = lastAddress.getFullAddress().split("\\.");
 
         if (recI == firstAddressParts.length - 1) {
             int limit;
 
-            if (firstAddress.substring(0, 11).equals(lastAddress.substring(0, 11))) limit = Integer.parseInt(lastAddressParts[3]);
-            else limit = 255;
+            if (firstAddress.getFullAddress().substring(0, 11).equals(lastAddress.getFullAddress().substring(0, 11))){
+                limit = Integer.parseInt(lastAddressParts[3]);
+            }else limit = 255;
 
             for (int i = Integer.parseInt(firstAddressParts[3]); i <= limit; i++){
-                this.getNetworkHosts().add(String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], String.format("%03d", i)));
+                String strAddr = String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], String.format("%03d", i));
+                this.getNetworkHosts().add(new Address(strAddr));
             }
         }else{
             for (int j = Integer.parseInt(firstAddressParts[recI]); j <= Integer.parseInt(lastAddressParts[recI]); j++){
                 firstAddressParts[recI] = String.format("%03d", j);
+                String strAddr = String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], firstAddressParts[3]);
 
-                setNetworkHosts( String.join(".", firstAddressParts[0], firstAddressParts[1], firstAddressParts[2], firstAddressParts[3]), lastAddress, recI + 1);
+                setNetworkHosts(new Address(strAddr), lastAddress, recI + 1);
                 for (int i = recI + 1; i < firstAddressParts.length; i++){
                     firstAddressParts[i] = "000";
                 }
@@ -86,7 +78,8 @@ public class Network {
                 }
             }else{
                 for (int i = Integer.parseInt(networkParts[3]); i < 256; i++){
-                    this.networkHosts.add(String.join(".",networkParts[0], networkParts[1], networkParts[2], String.format("%03d", i)));
+                    String strAddr = String.join(".",networkParts[0], networkParts[1], networkParts[2], String.format("%03d", i));
+                    this.networkHosts.add(new Address(strAddr));
                 }
             }
         }else setNetworkHosts(networkID, netmask, recI + 1);
@@ -97,7 +90,7 @@ public class Network {
         }
     }
 
-    ArrayList<String> getNetworkHosts(){
+    ArrayList<Address> getNetworkHosts(){
         return networkHosts;
     }
 }
