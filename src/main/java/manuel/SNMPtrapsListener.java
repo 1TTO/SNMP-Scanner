@@ -9,9 +9,14 @@ public class SNMPtrapsListener {
     private final SnmpListener listener;
     private final ObservableList<SNMPtrapsListenerItem> snmpTrapsListenerItems;
 
-    SNMPtrapsListener(Mib mib) {
+    /**
+     * Returns a SNMPtrapsListener object
+     * @param mib MIB object
+     * @param port listenerPort as Integer
+     */
+    SNMPtrapsListener(Mib mib, int port) {
         snmpTrapsListenerItems = FXCollections.observableArrayList();
-        this.listener = SnmpFactory.getInstance().newListener(162, mib);
+        this.listener = SnmpFactory.getInstance().newListener(port, mib);
 
         Platform.runLater(()->{
             Controller.staticTrapsListView.setItems(snmpTrapsListenerItems);
@@ -20,6 +25,9 @@ public class SNMPtrapsListener {
         run();
     }
 
+    /**
+     * Starts the SNMPtrapListener
+     */
     void run(){
         listener.addHandler(trap -> {
             Platform.runLater(()->{
@@ -29,6 +37,9 @@ public class SNMPtrapsListener {
         });
     }
 
+    /**
+     * Stops the SNMPtrapListener
+     */
     void stop(){
         listener.close();
     }

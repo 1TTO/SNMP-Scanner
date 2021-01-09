@@ -18,6 +18,9 @@ public class Controller {
     public VBox mibContent, oidContent;
     public Button oidAddButton, mibAddButton;
 
+    /**
+     * Sets up the FXML settings of the GUI
+     */
     public void initialize(){
         staticResultListView = resultListView;
         staticTrapsListView = trapsListView;
@@ -161,6 +164,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Exception-handling if in a TextField the input doesn't verify as a valid address
+     */
     void handleWrongAddress(TextField txtFld){
         if (!Address.isAddress(txtFld.getText())){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -173,6 +179,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Exception-handling if a file could not be loaded
+     */
     void handleFileNotFoundError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("File");
@@ -182,6 +191,9 @@ public class Controller {
         alert.showAndWait();
     }
 
+    /**
+     * Updates the scrollview of the OIDs in the settings tab
+     */
     void updateOidScrollPane(){
         oidContent.getChildren().clear();
 
@@ -212,6 +224,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Updates the scrollview of the MIBs in the settings tab
+     */
     void updateMibScrollPane(){
         mibContent.getChildren().clear();
 

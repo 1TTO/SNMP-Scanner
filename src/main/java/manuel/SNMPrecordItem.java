@@ -18,6 +18,10 @@ public class SNMPrecordItem extends Label {
     private final ScrollPane root;
     private final GridPane content;
 
+    /**
+     * Returns a SNMPrecordItem which normally is added to ListView
+     * @param varbindCollection VarbindCollection with the result of the SNMP-scan
+     */
     SNMPrecordItem(VarbindCollection varbindCollection){
         root = new ScrollPane();
         itemStage = new Stage();
@@ -42,6 +46,10 @@ public class SNMPrecordItem extends Label {
         });
     }
 
+    /**
+     * Sets up the SNMPrecordItem with its content
+     * @param varbindCollection VarbindCollection with the result of the SNMP-scan
+     */
     private void setupSNMPrecordItem(VarbindCollection varbindCollection){
         ArrayList<String> oidFileContent;
 

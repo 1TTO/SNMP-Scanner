@@ -7,6 +7,12 @@ public class Network {
     private int netmask;
     private final ArrayList<Address> networkHosts = new ArrayList<>();
 
+    /**
+     * Returns a Network object which contains all hosts, the netmask (if provided)
+     * and the networkID
+     * @param singleNetworkAddress Address object of an address which is in the network
+     * @param netmask Integer of the netmask in decimal; e.g. 24
+     */
     Network(Address singleNetworkAddress, int netmask){
         this.netmask = netmask;
 
@@ -14,10 +20,21 @@ public class Network {
         setNetworkHosts(this.networkID, this.netmask, 0);
     }
 
+    /**
+     * Returns a Network object which contains all hosts, the netmask (if provided)
+     * and the networkID
+     * @param firstAddress Address object of the first included address in the network
+     * @param lastAddress Address object of the last included address in the network
+     */
     Network(Address firstAddress, Address lastAddress){
         setNetworkHosts(firstAddress, lastAddress, 0);
     }
 
+    /**
+     * Sets the networkID of the network object
+     * @param singleNetworkAddress Address object of an address which is in the network
+     * @param netmask Integer of the netmask e.g. 24
+     */
     private void setNetworkID(Address singleNetworkAddress, int netmask){
         String[] networkParts = singleNetworkAddress.getFullAddress().split("\\.");
 
@@ -38,6 +55,12 @@ public class Network {
         }
     }
 
+    /**
+     * Sets all hosts of the network to the arraylist of addresses of the instance
+     * @param firstAddress Address object of the first included address in the network
+     * @param lastAddress Address object of the last included address in the network
+     * @param recI Recursive i-counter for function; starts always with 0
+     */
     private void setNetworkHosts(Address firstAddress, Address lastAddress, int recI){
         String[] firstAddressParts = firstAddress.getFullAddress().split("\\.");
         String[] lastAddressParts = lastAddress.getFullAddress().split("\\.");
@@ -66,6 +89,12 @@ public class Network {
         }
     }
 
+    /**
+     * Sets all hosts of the network to the arraylist of addresses of the instance
+     * @param networkID String of the networkID which previously has been set with the function setNetworkID()
+     * @param netmask Integer of the netmask; e.g. 24
+     * @param recI Recursive i-counter for function; starts always with 0
+     */
     private void setNetworkHosts(String networkID, int netmask, int recI){
         String[] networkParts = networkID.split("\\.");
 
@@ -90,6 +119,10 @@ public class Network {
         }
     }
 
+    /**
+     * Returns all hosts in the network
+     * @return ArrayList of Address of hosts in the network
+     */
     ArrayList<Address> getNetworkHosts(){
         return networkHosts;
     }

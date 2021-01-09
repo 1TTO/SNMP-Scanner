@@ -28,14 +28,22 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 370, 440));
         primaryStage.show();
 
-        listener = new SNMPtrapsListener(getMib());
+        listener = new SNMPtrapsListener(getMib(), 162);
     }
 
+    /**
+     * Function which will be called when the program will be closed to stop the SNMPtrapListener
+     */
     @Override
     public void stop(){
         listener.stop();
     }
 
+    /**
+     * Static method to load the MIB object which is the same for the whole file
+     * @return a MIB object
+     * @throws IOException when the file with the mib-content couldn't be found
+     */
     static Mib getMib() throws IOException {
         ArrayList<String> mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
 

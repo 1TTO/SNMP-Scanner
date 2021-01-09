@@ -16,6 +16,10 @@ public class SNMPtrapsListenerItem extends Label{
     private final VBox content;
     private final GridPane varbindsContent;
 
+    /**
+     * Returns a SNMPtrapsListenerItem for ListView
+     * @param trap SnmpNotificationEvent of the trap
+     */
     SNMPtrapsListenerItem(SnmpNotificationEvent trap){
         root = new ScrollPane();
         itemStage = new Stage();
@@ -42,6 +46,10 @@ public class SNMPtrapsListenerItem extends Label{
         });
     }
 
+    /**
+     * Sets up the SNMPtrapsListenerItem graphically
+     * @param trap SnmpNotificationEvent of the trap
+     */
     private void setupSNMPtrapsListenerItem(SnmpNotificationEvent trap){
         root.setContent(content);
         content.getChildren().add(new Label("Peer: " + trap.getSubject().getPeer()));
