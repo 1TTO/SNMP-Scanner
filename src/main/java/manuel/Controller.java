@@ -25,6 +25,13 @@ public class Controller {
         staticResultListView = resultListView;
         staticTrapsListView = trapsListView;
 
+        //To be sure that the files exist
+        try{
+            File.getCSVContent(File.MIB_FILE_PATH);
+        }catch (IOException ex){
+            File.createExternalFiles();
+        }
+
         updateMibScrollPane();
         updateOidScrollPane();
 
@@ -35,10 +42,10 @@ public class Controller {
             ArrayList<String> mibFileContent = null, oidFileContent = null;
 
             try {
-                mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
                 Main.scanner = new SNMPscanner(Main.getMib());
                 Main.scanner.getVarbindCollections().clear();
                 Main.scanner.getSNMPrecordItems().clear();
+                mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
             } catch (IOException ioException) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("MIB");
@@ -182,7 +189,7 @@ public class Controller {
     /**
      * Exception-handling if a file could not be loaded
      */
-    void handleFileNotFoundError(){
+    static void handleFileNotFoundError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("File");
         alert.setHeaderText("Could not open the file");

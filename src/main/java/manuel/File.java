@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class File {
+    static final String DATA_DIRECTORY_PATH = "./../data";
     static final String MIB_FILE_PATH = "./../data/mib.csv";
     static final String OID_FILE_PATH = "./../data/oid.csv";
 
@@ -28,5 +29,31 @@ public class File {
      */
     static void setCSVContent(String path, ArrayList<String> contents) throws IOException{
         Files.write(Paths.get(path), String.join(";", contents).getBytes());
+    }
+
+    /**
+     * If the files are not found, the program makes it for you
+     */
+    static void createExternalFiles(){
+        ArrayList<String> mibContent = new ArrayList<>(Arrays.asList("SNMPv2-MIB", "IF-MIB", "IP-MIB", "HOST-RESOURCES-MIB"));
+        ArrayList<String> oidContent = new ArrayList<>(Arrays.asList("ipAdEntAddr", "sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "hrStorageSize"));
+        java.io.File file;
+        boolean result;
+
+        file = new java.io.File(DATA_DIRECTORY_PATH);
+        result = file.mkdir();
+
+        try {
+            file = new java.io.File(MIB_FILE_PATH);
+            result = file.createNewFile();
+
+            file = new java.io.File(OID_FILE_PATH);
+            result = file.createNewFile();
+
+            File.setCSVContent(MIB_FILE_PATH, mibContent);
+            File.setCSVContent(OID_FILE_PATH, oidContent);
+        } catch (IOException e) {
+            Controller.handleFileNotFoundError();
+        }
     }
 }
