@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/11.0.1">
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="manuel.Controller">
     <Text text="SNMP Scanner" textAlignment="CENTER" wrappingWidth="373.9902048110962">
       <font>
          <Font name="Berlin Sans FB" size="24.0" />
@@ -12,22 +12,86 @@
     <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="373.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
         <Tab text="Scanner">
             <Pane prefHeight="380.0" prefWidth="362.0">
-                <TextField layoutX="14.0" layoutY="18.0" prefHeight="25.0" prefWidth="267.0" promptText="10.10.30.0">
+                <TextField fx:id="firstAddress" layoutX="15.0" layoutY="62.0" prefHeight="25.0" prefWidth="301.0" promptText="10.10.30.0">
                 </TextField>
-                <Button layoutX="290.0" layoutY="18.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Scan" />
-                <TextField layoutX="14.0" layoutY="53.0" prefHeight="25.0" prefWidth="268.0" promptText="10.10.30.0" />
-            <ChoiceBox layoutX="290.0" layoutY="53.0" prefHeight="25.0" prefWidth="70.0" />
+                <Button fx:id="scanButton" layoutX="10.0" layoutY="319.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="348.0" text="Scan" />
+                <TextField fx:id="secondAddress" layoutX="15.0" layoutY="94.0" prefHeight="25.0" prefWidth="300.0" promptText="10.10.30.0" visible="false" />
+            <TextField fx:id="networkMaskTextField" layoutX="316.0" layoutY="62.0" prefHeight="25.0" prefWidth="40.0" promptText="24" text="24" />
             </Pane>
         </Tab>
 
         <Tab text="Results">
             <Pane>
-                <ScrollPane prefHeight="381.0" prefWidth="374.0">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
-                </ScrollPane>
+                <ListView fx:id="resultListView" layoutX="17.0" layoutY="10.0" prefHeight="349.0" prefWidth="339.0">
+                </ListView>
+            </Pane>
+        </Tab>
+        <Tab text="Traps">
+            <Pane>
+                <ListView fx:id="trapsListView" layoutX="17.0" layoutY="10.0" prefHeight="349.0" prefWidth="339.0">
+                </ListView>
             </Pane>
         </Tab>
         <Tab text="Settings">
+            <Pane>
+            <children>
+               <RadioButton layoutX="22.0" layoutY="42.0" mnemonicParsing="false" prefWidth="88.0" text="get">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="getMethod" />
+                  </toggleGroup></RadioButton>
+               <RadioButton layoutX="21.0" layoutY="64.0" mnemonicParsing="false" selected="true" text="getNext" toggleGroup="$getMethod" />
+               <Label layoutX="22.0" layoutY="14.0" text="GetMethod" underline="true">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Label>
+               <Label layoutX="187.0" layoutY="14.0" text="Community" underline="true">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Label>
+               <Label layoutX="23.0" layoutY="104.0" text="ScanOption" underline="true">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Label>
+               <RadioButton layoutX="23.0" layoutY="132.0" mnemonicParsing="false" text="Address">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="scanOption" />
+                  </toggleGroup></RadioButton>
+               <RadioButton layoutX="23.0" layoutY="155.0" mnemonicParsing="false" selected="true" text="Network" toggleGroup="$scanOption" />
+               <RadioButton layoutX="24.0" layoutY="179.0" mnemonicParsing="false" text="Range" toggleGroup="$scanOption" />
+               <Label layoutX="22.0" layoutY="210.0" text="MIBs" underline="true">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Label>
+               <Button fx:id="mibAddButton" layoutX="142.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="49.0" text="Add" />
+               <TextField fx:id="mibTextfield" layoutX="21.0" layoutY="236.0" prefHeight="25.0" prefWidth="121.0" />
+               <Label layoutX="201.0" layoutY="210.0" text="OIDs" underline="true">
+                  <font>
+                     <Font size="17.0" />
+                  </font>
+               </Label>
+               <Button fx:id="oidAddButton" layoutX="309.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Add" />
+               <TextField fx:id="oidTextfield" layoutX="201.0" layoutY="236.0" prefHeight="25.0" prefWidth="108.0" />
+               <ScrollPane layoutX="21.0" layoutY="266.0" prefHeight="97.0" prefWidth="169.0">
+                 <content>
+                   <VBox fx:id="mibContent" />
+                 </content>
+               </ScrollPane>
+               <ScrollPane layoutX="201.0" layoutY="265.0" prefHeight="98.0" prefWidth="159.0">
+                 <content>
+                     <VBox fx:id="oidContent" />
+                 </content>
+               </ScrollPane>
+                <RadioButton layoutX="187.0" layoutY="42.0" mnemonicParsing="false" selected="true" text="public">
+                  <toggleGroup>
+                     <ToggleGroup fx:id="community" />
+                  </toggleGroup></RadioButton>
+                <RadioButton layoutX="187.0" layoutY="65.0" mnemonicParsing="false" text="private" toggleGroup="$community" />
+            </children>
+            </Pane>
         </Tab>
     </TabPane>
 </VBox>
