@@ -1,7 +1,10 @@
 # SNMP Scanner
 https://github.com/1TTO/SNMP-Scanner
 
-![User Interface](UI.png)
+![startScreen](./readMeFiles/startScreen.jpg)
+![resultsScreen](./readMeFiles/resultsScreen.jpg)
+![trapsScreen](./readMeFiles/trapsScreen.jpg)
+![settingsScreen](./readMeFiles/settingsScreen.jpg)
 
 ##Description
 This SNMP Scanner has the option to scan an address, a network or range. You can select if you prefer using 
