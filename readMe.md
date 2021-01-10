@@ -6,6 +6,7 @@ https://github.com/1TTO/SNMP-Scanner
 ![trapsScreen](./readMeFiles/trapsScreen.jpg)
 ![settingsScreen](./readMeFiles/settingsScreen.jpg)
 
+
 ##Description
 This SNMP Scanner has the option to scan an address, a network or range. You can select if you prefer using 
 get or getNext or if you want to scan the public or private community. You can add custom MIBs and OIDs and delete
@@ -15,7 +16,7 @@ you will see all traps that were captured since the start of the program. By dou
 will be provided with a detailed view of the trap and its information.
 
 ## Installing:
-Open your project in Intellij and run the command: maven package
+Open your project in Intellij and run the command: maven package.
 Make sure that in the folder of the artifact you put a folder named data with a mib.csv and oid.csv where
 you insert your mibs and oids.
 Execute your artifact in the command prompt with java -jar [Artifactname].
