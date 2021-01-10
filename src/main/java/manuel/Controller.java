@@ -182,7 +182,7 @@ public class Controller {
     /**
      * Exception-handling if a file could not be loaded
      */
-    void handleFileNotFoundError(){
+    static void handleFileNotFoundError(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("File");
         alert.setHeaderText("Could not open the file");
