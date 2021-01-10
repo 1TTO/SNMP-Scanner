@@ -45,7 +45,14 @@ public class Main extends Application {
      * @throws IOException when the file with the mib-content couldn't be found
      */
     static Mib getMib() throws IOException {
-        ArrayList<String> mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
+        ArrayList<String> mibFileContent;
+
+        try{
+            mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
+        }catch (IOException ex){
+            File.createExternalFiles();
+            mibFileContent = File.getCSVContent(File.MIB_FILE_PATH);
+        }
 
         Mib mib = MibFactory.getInstance().newMib();
 

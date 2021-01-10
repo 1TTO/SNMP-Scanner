@@ -34,7 +34,7 @@ public class File {
     /**
      * If the files are not found, the program makes it for you
      */
-    void createExternalFiles(){
+    static void createExternalFiles(){
         ArrayList<String> mibContent = new ArrayList<>(Arrays.asList("SNMPv2-MIB", "IF-MIB", "IP-MIB", "HOST-RESOURCES-MIB"));
         ArrayList<String> oidContent = new ArrayList<>(Arrays.asList("ipAdEntAddr", "sysDescr", "sysUpTime", "sysContact", "sysName", "sysLocation", "hrStorageSize"));
         java.io.File file;
