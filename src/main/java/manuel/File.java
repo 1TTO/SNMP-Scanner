@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class File {
-    static final String DATA_DIRECTORY_PATH = "./../data";
-    static final String MIB_FILE_PATH = "./../data/mib.csv";
-    static final String OID_FILE_PATH = "./../data/oid.csv";
+    static final String DATA_DIRECTORY_PATH = "./data";
+    static final String MIB_FILE_PATH = DATA_DIRECTORY_PATH.concat("/mib.csv");
+    static final String OID_FILE_PATH = DATA_DIRECTORY_PATH.concat("/oid.csv");
 
     /**
      * Reads a csv-file and returns the content as list
