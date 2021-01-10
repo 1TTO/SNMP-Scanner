@@ -10,9 +10,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.soulwing.snmp.VarbindCollection;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 public class SNMPrecordItem extends Label {
     private final Stage itemStage;
     private final ScrollPane root;
@@ -51,17 +48,12 @@ public class SNMPrecordItem extends Label {
      * @param varbindCollection VarbindCollection with the result of the SNMP-scan
      */
     private void setupSNMPrecordItem(VarbindCollection varbindCollection){
-        ArrayList<String> oidFileContent;
-
         root.setContent(content);
         content.setGridLinesVisible(true);
         content.setVgap(5);
-        try {
-            oidFileContent = File.getCSVContent(File.OID_FILE_PATH);
-        } catch (IOException e) {return;}
 
         for (int i = 0; i < varbindCollection.size(); i++){
-            Label description = new Label(oidFileContent.get(i));
+            Label description = new Label(varbindCollection.get(i).getName());
             Label value = new Label(varbindCollection.get(i).toString());
 
             description.setPadding(new Insets(0, 5, 0, 5));
